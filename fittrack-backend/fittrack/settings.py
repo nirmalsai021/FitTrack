@@ -102,6 +102,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://amazing-app-123456.netlify.app",  # Replace with your actual Netlify URL
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
