@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["python39"]
+
+[phases.install]
+cmds = ["pip install -r fittrack-backend/requirements.txt"]
+
+[phases.build]
+cmds = ["python fittrack-backend/manage.py collectstatic --noinput"]
+
+[start]
+cmd = "python fittrack-backend/manage.py migrate && gunicorn --chdir fittrack-backend fittrack.wsgi --bind 0.0.0.0:$PORT"
