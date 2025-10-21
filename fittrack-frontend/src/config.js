@@ -1,7 +1,5 @@
 const config = {
-  API_BASE_URL: process.env.NODE_ENV === 'production' 
-    ? 'https://fittrack-backend-k3my.onrender.com/api'
-    : 'http://127.0.0.1:8000/api'
+  API_BASE_URL: 'https://fittrack-backend-k3my.onrender.com/api'
 };
 
 export default config;
