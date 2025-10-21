@@ -61,13 +61,16 @@ def forgot_password(request):
         user.last_name = reset_code
         user.save()
         
-        send_mail(
-            'FitTrack Password Reset',
-            f'Your password reset code is: {reset_code}',
-            settings.DEFAULT_FROM_EMAIL,
-            [email],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                'FitTrack Password Reset',
+                f'Your password reset code is: {reset_code}\n\nUse this code to reset your password in the FitTrack app.',
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+            )
+        except Exception as mail_error:
+            return Response({'error': f'Email service unavailable: {str(mail_error)}'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
         
         return Response({'message': 'Reset code sent to your email'})
     except User.DoesNotExist:
