@@ -16,12 +16,14 @@ import secrets
 @permission_classes([AllowAny])
 def register(request):
     try:
+        print(f"Registration data received: {request.data}")
         username = request.data.get('username')
         password = request.data.get('password')
         email = request.data.get('email', '')
         
         # Validation
         if not username or not password:
+            print("Missing username or password")
             return Response({'error': 'Username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
         
         if User.objects.filter(username=username).exists():
@@ -46,6 +48,7 @@ def register(request):
 @permission_classes([AllowAny])
 def login(request):
     try:
+        print(f"Login data received: {request.data}")
         username = request.data.get('username')
         password = request.data.get('password')
         
@@ -114,6 +117,7 @@ def forgot_password(request):
 @permission_classes([AllowAny])
 def reset_password(request):
     try:
+        print(f"Reset password data received: {request.data}")
         email = request.data.get('email')
         code = request.data.get('code')
         new_password = request.data.get('new_password')
