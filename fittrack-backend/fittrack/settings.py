@@ -84,7 +84,7 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Email Configuration - Gmail with short timeout
+# Email Configuration - Force Gmail SMTP
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
@@ -92,4 +92,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'birthdaywisher2025@gmail.com'
 EMAIL_HOST_PASSWORD = 'cvoh yvrg epbl laiw'
 DEFAULT_FROM_EMAIL = 'birthdaywisher2025@gmail.com'
-EMAIL_TIMEOUT = 3
+SERVER_EMAIL = 'birthdaywisher2025@gmail.com'
+EMAIL_TIMEOUT = 5
+EMAIL_USE_SSL = False
