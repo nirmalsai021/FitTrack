@@ -113,18 +113,37 @@ def forgot_password(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def reset_password(request):
-    email = request.data.get('email')
-    code = request.data.get('code')
-    new_password = request.data.get('new_password')
-    
     try:
-        user = User.objects.get(email=email)
-        if user.last_name == code:
-            user.set_password(new_password)
-            user.last_name = ''  # Clear the reset code
-            user.save()
-            return Response({'message': 'Password reset successfully'})
-        else:
-            return Response({'error': 'Invalid reset code'}, status=status.HTTP_400_BAD_REQUEST)
-    except User.DoesNotExist:
-        return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+        email = request.data.get('email')
+        code = request.data.get('code')
+        new_password = request.data.get('new_password')
+        
+        print(f"Reset password attempt for email: {email}, code: {code}")
+        
+        # Validation
+        if not email or not code or not new_password:
+            return Response({'error': 'Email, code, and new password are required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        if len(new_password) < 6:
+            return Response({'error': 'Password must be at least 6 characters'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            user = User.objects.get(email=email)
+            print(f"User found: {user.username}, stored code: {user.last_name}")
+            
+            if user.last_name == code.upper():
+                user.set_password(new_password)
+                user.last_name = ''  # Clear the reset code
+                user.save()
+                print(f"Password reset successful for: {email}")
+                return Response({'message': 'Password reset successfully'})
+            else:
+                print(f"Code mismatch. Expected: {user.last_name}, Got: {code}")
+                return Response({'error': 'Invalid or expired reset code'}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            print(f"User not found for email: {email}")
+            return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
+            
+    except Exception as e:
+        print(f"Reset password error: {str(e)}")
+        return Response({'error': 'Password reset failed'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
