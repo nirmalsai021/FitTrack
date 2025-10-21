@@ -1,0 +1,25 @@
+# Backend
+fittrack-backend/venv/
+fittrack-backend/__pycache__/
+fittrack-backend/*/__pycache__/
+fittrack-backend/db.sqlite3
+fittrack-backend/*.pyc
+fittrack-backend/.env
+
+# Frontend
+fittrack-frontend/node_modules/
+fittrack-frontend/build/
+fittrack-frontend/.env
+fittrack-frontend/npm-debug.log*
+fittrack-frontend/yarn-debug.log*
+fittrack-frontend/yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
