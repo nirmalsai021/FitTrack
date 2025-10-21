@@ -14,10 +14,6 @@ const WorkoutTracker = () => {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
-  useEffect(() => {
-    fetchWorkouts();
-  }, [fetchWorkouts]);
-
   const fetchWorkouts = React.useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
@@ -29,6 +25,10 @@ const WorkoutTracker = () => {
       showAlert('Error fetching workouts', 'danger');
     }
   }, []);
+
+  useEffect(() => {
+    fetchWorkouts();
+  }, [fetchWorkouts]);
 
   useEffect(() => {
     if (selectedMuscleGroup === 'All') {
