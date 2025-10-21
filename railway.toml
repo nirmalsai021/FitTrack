@@ -1,6 +1,5 @@
 [build]
-builder = "NIXPACKS"
+builder = "DOCKERFILE"
 
 [deploy]
-startCommand = "python fittrack-backend/manage.py migrate && gunicorn --chdir fittrack-backend fittrack.wsgi"
-healthcheckPath = "/"
+startCommand = "python fittrack-backend/manage.py migrate && gunicorn --chdir fittrack-backend fittrack.wsgi --bind 0.0.0.0:$PORT"
