@@ -16,6 +16,18 @@ const WorkoutTracker = () => {
 
   useEffect(() => {
     fetchWorkouts();
+  }, [fetchWorkouts]);
+
+  const fetchWorkouts = React.useCallback(async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(API_URL, {
+        headers: { Authorization: `Token ${token}` }
+      });
+      setWorkouts(response.data);
+    } catch (error) {
+      showAlert('Error fetching workouts', 'danger');
+    }
   }, []);
 
   useEffect(() => {
@@ -26,17 +38,7 @@ const WorkoutTracker = () => {
     }
   }, [workouts, selectedMuscleGroup]);
 
-  const fetchWorkouts = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(API_URL, {
-        headers: { Authorization: `Token ${token}` }
-      });
-      setWorkouts(response.data);
-    } catch (error) {
-      showAlert('Error fetching workouts', 'danger');
-    }
-  };
+
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
