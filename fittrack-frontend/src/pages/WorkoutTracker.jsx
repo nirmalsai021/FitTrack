@@ -3,8 +3,9 @@ import axios from 'axios';
 import WorkoutForm from '../components/WorkoutForm';
 import WorkoutList from '../components/WorkoutList';
 import FilterBar from '../components/FilterBar';
+import config from '../config';
 
-const API_URL = 'https://fittrack-production.up.railway.app/api/workouts/';
+const API_URL = `${config.API_BASE_URL}/workouts/`;
 
 const WorkoutTracker = () => {
   const [workouts, setWorkouts] = useState([]);

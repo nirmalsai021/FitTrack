@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
 
 const Register = ({ onLogin }) => {
   const [formData, setFormData] = useState({ username: '', password: '', email: '' });
@@ -11,7 +12,7 @@ const Register = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://fittrack-production.up.railway.app/api/auth/register/', formData);
+      const response = await axios.post(`${config.API_BASE_URL}/auth/register/`, formData);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', response.data.username);
       onLogin(response.data);

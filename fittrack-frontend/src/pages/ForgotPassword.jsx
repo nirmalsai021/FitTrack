@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ const ForgotPassword = () => {
     setMessage('');
 
     try {
-      await axios.post('https://fittrack-production.up.railway.app/api/auth/forgot-password/', { email });
+      await axios.post(`${config.API_BASE_URL}/auth/forgot-password/`, { email });
       setMessage('Reset code sent to your email!');
     } catch (error) {
       setError(error.response?.data?.error || 'Failed to send reset code');

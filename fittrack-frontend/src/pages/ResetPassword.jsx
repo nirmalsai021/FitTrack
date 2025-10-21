@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import config from '../config';
 
 const ResetPassword = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const ResetPassword = () => {
     setMessage('');
 
     try {
-      await axios.post('https://fittrack-production.up.railway.app/api/auth/reset-password/', formData);
+      await axios.post(`${config.API_BASE_URL}/auth/reset-password/`, formData);
       setMessage('Password reset successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
