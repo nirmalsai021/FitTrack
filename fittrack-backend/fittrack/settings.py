@@ -79,13 +79,12 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Email Configuration
+# Email Configuration - Using Outlook SMTP as backup
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp-mail.outlook.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'birthdaywisher2025@gmail.com'
-EMAIL_HOST_PASSWORD = 'cvoh yvrg epbl laiw'
-DEFAULT_FROM_EMAIL = 'birthdaywisher2025@gmail.com'
-EMAIL_TIMEOUT = 5
-EMAIL_USE_LOCALTIME = True
+EMAIL_HOST_USER = 'fittrack2025@outlook.com'
+EMAIL_HOST_PASSWORD = 'FitTrack@2025'
+DEFAULT_FROM_EMAIL = 'fittrack2025@outlook.com'
+EMAIL_TIMEOUT = 10
