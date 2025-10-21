@@ -7,8 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 import secrets
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -30,6 +32,7 @@ def register(request):
         'username': user.username
     })
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
@@ -49,6 +52,7 @@ def login(request):
     
     return Response({'error': 'Invalid credentials'}, status=401)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def forgot_password(request):
@@ -71,6 +75,7 @@ def forgot_password(request):
     except:
         return Response({'error': 'Email not found'}, status=404)
 
+@csrf_exempt
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def reset_password(request):
