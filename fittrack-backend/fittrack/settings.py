@@ -106,3 +106,6 @@ CORS_ALLOW_METHODS = [
 EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", "fittrack@example.com")
+
+# Disable sandbox mode to actually send emails
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
