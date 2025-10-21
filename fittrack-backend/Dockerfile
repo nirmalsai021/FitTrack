@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE $PORT
 
-CMD ["python", "manage.py", "migrate", "&&", "gunicorn", "fittrack.wsgi:application", "--bind", "0.0.0.0:$PORT"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn fittrack.wsgi:application --bind 0.0.0.0:$PORT"]
