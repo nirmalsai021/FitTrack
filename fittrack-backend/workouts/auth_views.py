@@ -15,18 +15,16 @@ import logging
 logger = logging.getLogger(__name__)
 
 def send_email_async(subject, message, recipient):
-    """Send email in background thread to prevent worker timeout"""
+    """Send email using SendGrid API in background thread"""
     def send_email():
         try:
-            # Use HTML email for better deliverability
-            email = EmailMessage(
+            send_mail(
                 subject=subject,
-                body=f"<h3>FitTrack</h3><p>{message}</p>",
+                message=message,
                 from_email=settings.DEFAULT_FROM_EMAIL,
-                to=[recipient],
+                recipient_list=[recipient],
+                fail_silently=False
             )
-            email.content_subtype = "html"
-            email.send(fail_silently=False)
             logger.info(f"Email sent successfully to {recipient}")
         except Exception as e:
             logger.error(f"Email failed: {str(e)}")
