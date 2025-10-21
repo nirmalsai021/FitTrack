@@ -76,15 +76,14 @@ REST_FRAMEWORK = {
 }
 
 # CORS Settings
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://fittrack-frontend-157f.onrender.com",
+    "https://fit-track-rust.vercel.app",
+]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# Email Configuration - Using Outlook SMTP as backup
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-mail.outlook.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'fittrack2025@outlook.com'
-EMAIL_HOST_PASSWORD = 'FitTrack@2025'
-DEFAULT_FROM_EMAIL = 'fittrack2025@outlook.com'
-EMAIL_TIMEOUT = 10
+# Email Configuration - Console to prevent worker crashes
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'fittrack@example.com'
