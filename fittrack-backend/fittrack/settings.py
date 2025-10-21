@@ -74,9 +74,33 @@ REST_FRAMEWORK = {
     ]
 }
 
-# CORS - Allow everything
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = [
+    "https://fit-track-rust.vercel.app",
+    "https://fittrack-frontend-157f.onrender.com",
+    "http://localhost:3000",
+]
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 # Email - Using environment variables
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

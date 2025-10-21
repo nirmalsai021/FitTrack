@@ -8,7 +8,22 @@ from django.conf import settings
 from django.utils.crypto import get_random_string
 from rest_framework.authtoken.models import Token
 from .models import OTP
+from threading import Thread
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+
+def send_email_async(subject, message, recipient):
+    """Send email in background thread to prevent worker timeout"""
+    def send_email():
+        try:
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=True)
+            logger.info(f"Email sent successfully to {recipient}")
+        except Exception as e:
+            logger.error(f"Email failed: {str(e)}")
+    
+    Thread(target=send_email).start()
 
 @csrf_exempt
 @require_http_methods(["POST"])
@@ -84,20 +99,18 @@ def forgot_password(request):
         # Save new OTP
         OTP.objects.create(email=email, otp=otp)
         
-        # Send email
-        try:
-            send_mail(
-                subject='FitTrack Password Reset Code',
-                message=f'Your password reset code is: {otp}\n\nThis code will expire in 10 minutes.',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False,
-            )
-            return JsonResponse({'message': f'Reset code sent to {email}! Code: {otp}'})
-        except Exception as mail_error:
-            return JsonResponse({'message': f'Code generated: {otp} (Email service unavailable)'})
+        # Send email asynchronously to prevent timeout
+        logger.info(f"Sending reset code {otp} to {email}")
+        send_email_async(
+            subject='FitTrack Password Reset Code',
+            message=f'Your password reset code is: {otp}\n\nThis code will expire in 10 minutes.',
+            recipient=email
+        )
+        
+        return JsonResponse({'message': f'Reset code sent to {email}! Code: {otp}'})
             
     except Exception as e:
+        logger.error(f"Forgot password error: {str(e)}")
         return JsonResponse({'error': 'Service error'}, status=500)
 
 @csrf_exempt
