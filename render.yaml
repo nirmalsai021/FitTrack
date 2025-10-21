@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fittrack-backend
+    env: python
+    buildCommand: "cd fittrack-backend && pip install -r requirements.txt"
+    startCommand: "cd fittrack-backend && python manage.py migrate && gunicorn fittrack.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DEBUG
+        value: False

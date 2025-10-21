@@ -99,9 +99,9 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://fittrack-production.up.railway.app",
     "https://fittrack-frontend.netlify.app",
-    "https://amazing-app-123456.netlify.app",
+    "https://fittrack-frontend.vercel.app",
+    "https://fittrack-backend.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
