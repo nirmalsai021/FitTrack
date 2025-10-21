@@ -109,7 +109,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://fittrack-frontend.onrender.com",
     "https://fittrack-frontend.netlify.app",
     "https://fittrack-frontend.vercel.app",
-    "https://fittrack-backend.onrender.com",
+    "https://fittrack-backend-k3my.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
