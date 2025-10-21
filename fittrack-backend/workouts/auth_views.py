@@ -45,19 +45,36 @@ def register(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    
-    user = authenticate(username=username, password=password)
-    if user:
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token': token.key,
-            'user_id': user.id,
-            'username': user.username
-        })
-    
-    return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        username = request.data.get('username')
+        password = request.data.get('password')
+        
+        print(f"Login attempt for username: {username}")
+        
+        # Validation
+        if not username or not password:
+            return Response({'error': 'Username and password are required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Check if user exists
+        if not User.objects.filter(username=username).exists():
+            return Response({'error': 'User does not exist'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        user = authenticate(username=username, password=password)
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            print(f"Login successful for: {username}")
+            return Response({
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username
+            })
+        else:
+            print(f"Authentication failed for: {username}")
+            return Response({'error': 'Invalid password'}, status=status.HTTP_401_UNAUTHORIZED)
+            
+    except Exception as e:
+        print(f"Login error: {str(e)}")
+        return Response({'error': 'Login failed'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
