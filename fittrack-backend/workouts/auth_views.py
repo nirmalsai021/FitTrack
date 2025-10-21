@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from rest_framework.authtoken.models import Token
@@ -18,7 +18,15 @@ def send_email_async(subject, message, recipient):
     """Send email in background thread to prevent worker timeout"""
     def send_email():
         try:
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [recipient], fail_silently=True)
+            # Use HTML email for better deliverability
+            email = EmailMessage(
+                subject=subject,
+                body=f"<h3>FitTrack</h3><p>{message}</p>",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[recipient],
+            )
+            email.content_subtype = "html"
+            email.send(fail_silently=False)
             logger.info(f"Email sent successfully to {recipient}")
         except Exception as e:
             logger.error(f"Email failed: {str(e)}")
