@@ -11,7 +11,7 @@ const Register = ({ onLogin }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/auth/register/', formData);
+      const response = await axios.post('https://fittrack-production.up.railway.app/api/auth/register/', formData);
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', response.data.username);
       onLogin(response.data);

@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     setMessage('');
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/auth/forgot-password/', { email });
+      await axios.post('https://fittrack-production.up.railway.app/api/auth/forgot-password/', { email });
       setMessage('Reset code sent to your email!');
     } catch (error) {
       setError(error.response?.data?.error || 'Failed to send reset code');

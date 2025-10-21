@@ -4,7 +4,7 @@ import WorkoutForm from '../components/WorkoutForm';
 import WorkoutList from '../components/WorkoutList';
 import FilterBar from '../components/FilterBar';
 
-const API_URL = 'http://127.0.0.1:8000/api/workouts/';
+const API_URL = 'https://fittrack-production.up.railway.app/api/workouts/';
 
 const WorkoutTracker = () => {
   const [workouts, setWorkouts] = useState([]);

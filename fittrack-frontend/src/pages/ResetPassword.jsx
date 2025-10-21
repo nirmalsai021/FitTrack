@@ -21,7 +21,7 @@ const ResetPassword = () => {
     setMessage('');
 
     try {
-      await axios.post('http://127.0.0.1:8000/api/auth/reset-password/', formData);
+      await axios.post('https://fittrack-production.up.railway.app/api/auth/reset-password/', formData);
       setMessage('Password reset successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
