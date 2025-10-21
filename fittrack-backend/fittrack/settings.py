@@ -105,12 +105,20 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://fit-track-r3qx.vercel.app",
     "https://fittrack-frontend-157f.onrender.com",
-    "https://fittrack-frontend.onrender.com",
-    "https://fittrack-frontend.netlify.app",
-    "https://fittrack-frontend.vercel.app",
-    "https://fittrack-backend-k3my.onrender.com",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -127,12 +135,6 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-# Email Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'birthdaywisher2025@gmail.com')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'cvoh yvrg epbl laiw')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'birthdaywisher2025@gmail.com')
-SERVER_EMAIL = EMAIL_HOST_USER
+# Email Configuration - Use console backend to prevent SMTP issues
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'fittrack@example.com'
