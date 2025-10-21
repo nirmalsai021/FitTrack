@@ -1,1 +1,1 @@
-web: python fittrack-backend/manage.py migrate && gunicorn --chdir fittrack-backend fittrack.wsgi --bind 0.0.0.0:$PORT
+web: cd fittrack-backend && python manage.py makemigrations && python manage.py migrate && gunicorn fittrack.wsgi --bind 0.0.0.0:$PORT

@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
+EXPOSE $PORT
 
-CMD ["sh", "-c", "python fittrack-backend/manage.py migrate && gunicorn --chdir fittrack-backend fittrack.wsgi --bind 0.0.0.0:8000"]
+CMD ["sh", "-c", "cd fittrack-backend && python manage.py makemigrations && python manage.py migrate && gunicorn fittrack.wsgi --bind 0.0.0.0:$PORT"]
