@@ -14,21 +14,21 @@ const WorkoutTracker = () => {
   const [editingWorkout, setEditingWorkout] = useState(null);
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
 
-  const fetchWorkouts = React.useCallback(async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(API_URL, {
-        headers: { Authorization: `Token ${token}` }
-      });
-      setWorkouts(response.data);
-    } catch (error) {
-      showAlert('Error fetching workouts', 'danger');
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchWorkouts = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(API_URL, {
+          headers: { Authorization: `Token ${token}` }
+        });
+        setWorkouts(response.data);
+      } catch (error) {
+        showAlert('Error fetching workouts', 'danger');
+      }
+    };
     fetchWorkouts();
-  }, [fetchWorkouts]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (selectedMuscleGroup === 'All') {
@@ -39,6 +39,18 @@ const WorkoutTracker = () => {
   }, [workouts, selectedMuscleGroup]);
 
 
+
+  const fetchWorkouts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(API_URL, {
+        headers: { Authorization: `Token ${token}` }
+      });
+      setWorkouts(response.data);
+    } catch (error) {
+      showAlert('Error fetching workouts', 'danger');
+    }
+  };
 
   const showAlert = (message, type) => {
     setAlert({ show: true, message, type });
