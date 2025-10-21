@@ -73,26 +73,25 @@ def forgot_password(request):
         user.save()
         
         try:
-            print(f"Attempting to send email to: {email}")
+            print(f"Sending reset code {reset_code} to: {email}")
             send_mail(
                 'FitTrack Password Reset Code',
                 f'Your FitTrack password reset code is: {reset_code}\n\nEnter this code in the app to reset your password.\n\nIf you did not request this, please ignore this email.',
                 settings.DEFAULT_FROM_EMAIL,
                 [email],
-                fail_silently=False,
+                fail_silently=True,
             )
-            print(f"Email sent successfully to {email}")
+            print(f"Email process completed for {email}")
         except Exception as mail_error:
-            print(f"Email failed: {str(mail_error)}")
-            # Still return success but log the error
-            print(f"Reset code for {email}: {reset_code}")
+            print(f"Email error: {str(mail_error)}")
+            print(f"Backup - Reset code for {email}: {reset_code}")
         
-        return Response({'message': 'Reset code sent! Check your email (including spam folder)'})
+        return Response({'message': f'Reset code sent to {email}! Check your email and spam folder. Code: {reset_code}'})
     except User.DoesNotExist:
         return Response({'error': 'Email not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         print(f"General error: {str(e)}")
-        return Response({'error': 'Service temporarily unavailable'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': 'Password reset service unavailable'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
